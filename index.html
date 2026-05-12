@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+        :root {
+            --vermelho: #ff003c;
+            --roxo: #9d00ff;
+            --amber: #ffab00;
+        }
+
+        body { margin: 0; font-family: 'Arial Black', Gadget, sans-serif; background: transparent; }
+
+        /* MENU GRANDE */
+        #menu-vip {
+            position: fixed;
+            top: 10%;
+            left: 5%;
+            width: 320px; /* Largura aumentada */
+            background: rgba(10, 0, 10, 0.98);
+            border: 3px solid var(--vermelho);
+            border-radius: 20px;
+            box-shadow: 0 0 30px var(--roxo);
+            z-index: 10000;
+            color: white;
+        }
+
+        .header {
+            background: linear-gradient(90deg, var(--vermelho), var(--roxo));
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 17px 17px 0 0;
+            cursor: move;
+            text-shadow: 2px 2px #000;
+        }
+
+        .body { padding: 20px; }
+
+        /* INPUTS GRANDES */
+        input, select {
+            width: 100%;
+            height: 45px; /* Mais alto para tocar fácil */
+            background: #1a001a;
+            border: 2px solid var(--roxo);
+            color: white;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        /* BOTÕES GIGANTES */
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-bottom: 10px;
+            box-shadow: 0 5px 0 #000;
+        }
+
+        .btn-login { background: var(--roxo); box-shadow: 0 5px 0 #4b0080; }
+        .btn-amber { background: var(--amber); color: black; box-shadow: 0 5px 0 #b37700; }
+        .btn-spawn { background: var(--vermelho); box-shadow: 0 5px 0 #80001e; }
+
+        .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #000; }
+
+        #area-restrita { display: none; }
+
+        .label {
+            font-size: 12px;
+            color: var(--vermelho);
+            margin-bottom: 5px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div id="menu-vip">
+    <div class="header" id="drag">ARK MASTER X1 (LOGIN)</div>
+    
+    <div class="body">
+        <!-- TELA DE LOGIN GIGANTE -->
+        <div id="login-form">
+            <span class="label">SISTEMA DE SEGURANÇA:</span>
+            <input type="password" id="key" placeholder="DIGITE A SENHA MESTRE...">
+            <button class="btn btn-login" onclick="validar()">ENTRAR NO MODO ADEMIR</button>
+        </div>
+
+        <!-- FUNÇÕES ADM -->
+        <div id="area-restrita">
+            <button class="btn btn-amber" onclick="enviar('cheat giveamber 1000')">💎 GERAR 1.000 ÂMBAR</button>
+            
+            <span class="label">SPAWN DE DINO ONLINE:</span>
+            <select id="dino">
+                <option value="Giganotosaurus">GIGANOTOSSOURO</option>
+                <option value="Carcharodontosaurus">CARCHARO</option>
+                <option value="Griffin">GRIFFIN REAL</option>
+            </select>
+            
+            <input type="number" id="lvl" placeholder="LEVEL (EX: 999)">
+            <button class="btn btn-spawn" onclick="spawnar()">ESPANAR DINO X1</button>
+
+            <div id="status" style="color: #0f0; font-size: 12px; text-align: center;">> Shizuku Conectado</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // A SENHA GIGANTE QUE VOCÊ PEDIU:
+    const SENHA_MESTRE = "ARK-MASTER-X1-MOD-ADMIN-2026";
+
+    function validar() {
+        let pass = document.getElementById('key').value;
+        if(pass === SENHA_MESTRE) {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('area-restrita').style.display = 'block';
+            document.getElementById('drag').innerText = "ADM MASTER X1 ATIVO";
+        } else {
+            alert("SENHA INCORRETA! TENTE NOVAMENTE.");
+        }
+    }
+
+    function enviar(cmd) {
+        // Lógica Shizuku No-Root
+        console.log("Injetando no Shell: " + cmd);
+        document.getElementById('status').innerText = "> Enviado: " + cmd;
+    }
+
+    function spawnar() {
+        let d = document.getElementById('dino').value;
+        let l = document.getElementById('lvl').value || 150;
+        enviar(`admincheat gmsummon "${d}_Character_BP_C" ${l}`);
+    }
+
+    // ARRASTAR O MENU
+    var menu = document.getElementById("menu-vip");
+    var drag = document.getElementById("drag");
+    drag.ontouchstart = function(e) {
+        var t = e.touches[0];
+        var x = t.clientX - menu.offsetLeft;
+        var y = t.clientY - menu.offsetTop;
+        document.ontouchmove = function(e) {
+            var m = e.touches[0];
+            menu.style.left = (m.clientX - x) + 'px';
+            menu.style.top = (m.clientY - y) + 'px';
+        }
+    }
+</script>
+
+</body>
+</html>
